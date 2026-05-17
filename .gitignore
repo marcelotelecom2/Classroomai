@@ -1,6 +1,6 @@
-node_modules
-dist
-.npm-cache
-vite-dev*.log
-.env
-.env.*
+node_modules/
+dist/
+.tools/
+*.log
+package-lock.json
+start-dev.ps1
