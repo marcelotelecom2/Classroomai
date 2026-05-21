@@ -1,37 +1,37 @@
 import { LucideIcon } from 'lucide-react';
-import * as Progress from '@radix-ui/react-progress';
 
 interface MetricCardProps {
+  icon: LucideIcon;
   title: string;
   value: string;
   progress?: number;
-  icon: LucideIcon;
-  color?: string;
+  subtitle?: string;
 }
 
-export function MetricCard({ title, value, progress, icon: Icon, color = '#6C4DFF' }: MetricCardProps) {
+export function MetricCard({ icon: Icon, title, value, progress, subtitle }: MetricCardProps) {
   return (
     <div className="bg-card rounded-xl p-5 border border-border">
       <div className="flex items-start justify-between mb-3">
-        <div>
-          <p className="text-sm text-muted-foreground mb-1">{title}</p>
-          <p className="text-2xl font-semibold">{value}</p>
-        </div>
-        <div className="p-2.5 rounded-lg" style={{ backgroundColor: `${color}15` }}>
-          <Icon size={20} style={{ color }} />
+        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+          <Icon size={20} />
         </div>
       </div>
 
+      <h3 className="text-2xl font-semibold mb-1">{value}</h3>
+      <p className="text-sm text-muted-foreground mb-3">{title}</p>
+
       {progress !== undefined && (
-        <Progress.Root className="h-1.5 bg-secondary rounded-full overflow-hidden">
-          <Progress.Indicator
-            className="h-full rounded-full transition-transform duration-300"
-            style={{
-              backgroundColor: color,
-              transform: `translateX(-${100 - progress}%)`
-            }}
-          />
-        </Progress.Root>
+        <div className="space-y-1">
+          <div className="w-full bg-secondary rounded-full h-1.5">
+            <div
+              className="bg-primary h-1.5 rounded-full transition-all"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          {subtitle && (
+            <p className="text-xs text-muted-foreground">{subtitle}</p>
+          )}
+        </div>
       )}
     </div>
   );

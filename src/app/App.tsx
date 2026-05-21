@@ -1,66 +1,108 @@
+import { BookOpen, Calendar, CheckSquare, Trophy } from 'lucide-react';
 import { Sidebar } from './components/Sidebar';
 import { MetricCard } from './components/MetricCard';
-import { UpcomingClasses } from './components/UpcomingClasses';
+import { UpcomingClass } from './components/UpcomingClass';
 import { EmotionCheck } from './components/EmotionCheck';
-import { TasksList } from './components/TasksList';
+import { TaskItem } from './components/TaskItem';
 import { AIAssistant } from './components/AIAssistant';
-import { BookOpen, UserCheck, CheckCircle, Zap } from 'lucide-react';
 
 export default function App() {
   return (
     <div className="flex h-screen bg-background">
-      <Sidebar activeItem="Dashboard" />
+      <Sidebar />
 
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-7xl mx-auto p-8">
-          <header className="mb-8">
-            <h1 className="text-3xl font-semibold mb-2">Olá, Lucas 👋</h1>
+          <div className="mb-8">
+            <h1 className="text-3xl font-semibold mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              Olá, Lucas 👋
+            </h1>
             <p className="text-muted-foreground">Vamos continuar evoluindo hoje.</p>
-          </header>
+          </div>
 
           <div className="grid grid-cols-4 gap-6 mb-8">
             <MetricCard
-              title="Aulas concluídas"
-              value="12/20"
-              progress={60}
               icon={BookOpen}
-              color="#6C4DFF"
+              title="Aulas concluídas"
+              value="18/24"
+              progress={75}
+              subtitle="75% completo"
             />
             <MetricCard
+              icon={Calendar}
               title="Presença média"
               value="92%"
               progress={92}
-              icon={UserCheck}
-              color="#10B981"
+              subtitle="Excelente frequência"
             />
             <MetricCard
+              icon={CheckSquare}
               title="Tarefas entregues"
               value="15/18"
               progress={83}
-              icon={CheckCircle}
-              color="#F59E0B"
+              subtitle="3 pendentes"
             />
             <MetricCard
+              icon={Trophy}
               title="XP total"
-              value="2.400"
-              icon={Zap}
-              color="#EC4899"
+              value="2.450"
+              subtitle="Nível 12"
             />
-          </div>
-
-          <div className="grid grid-cols-3 gap-6 mb-6">
-            <div className="col-span-2">
-              <UpcomingClasses />
-            </div>
-
-            <div>
-              <EmotionCheck />
-            </div>
           </div>
 
           <div className="grid grid-cols-3 gap-6">
-            <div className="col-span-2">
-              <TasksList />
+            <div className="col-span-2 space-y-6">
+              <div className="bg-card rounded-xl p-6 border border-border">
+                <h2 className="font-semibold mb-4">Próximas Aulas</h2>
+                <div className="space-y-3">
+                  <UpcomingClass
+                    date="Seg 19"
+                    title="Deep Learning e Redes Neurais"
+                    time="19:00 - 21:00"
+                    status="today"
+                  />
+                  <UpcomingClass
+                    date="Qua 21"
+                    title="Processamento de Linguagem Natural"
+                    time="19:00 - 21:00"
+                    status="soon"
+                  />
+                  <UpcomingClass
+                    date="Sex 23"
+                    title="Computer Vision Avançado"
+                    time="19:00 - 21:00"
+                    status="scheduled"
+                  />
+                </div>
+              </div>
+
+              <EmotionCheck />
+
+              <div className="bg-card rounded-xl p-6 border border-border">
+                <h2 className="font-semibold mb-4">Tarefas Pendentes</h2>
+                <div className="space-y-2">
+                  <TaskItem
+                    title="Implementar modelo de classificação de imagens"
+                    status="late"
+                    dueDate="16 Mai"
+                  />
+                  <TaskItem
+                    title="Estudar algoritmos de otimização"
+                    status="pending"
+                    dueDate="20 Mai"
+                  />
+                  <TaskItem
+                    title="Quiz: Fundamentos de ML"
+                    status="completed"
+                    dueDate="15 Mai"
+                  />
+                  <TaskItem
+                    title="Projeto: Chatbot com GPT"
+                    status="pending"
+                    dueDate="25 Mai"
+                  />
+                </div>
+              </div>
             </div>
 
             <div>
