@@ -1,6 +1,10 @@
 import { Sparkles } from 'lucide-react';
 
-export function AIAssistant() {
+interface AIAssistantProps {
+  onOpenChat?: () => void;
+}
+
+export function AIAssistant({ onOpenChat }: AIAssistantProps) {
   return (
     <div className="bg-gradient-to-br from-primary to-primary/80 rounded-xl p-6 text-primary-foreground">
       <div className="flex items-start gap-4">
@@ -12,7 +16,11 @@ export function AIAssistant() {
           <p className="text-sm text-primary-foreground/90 mb-4">
             Tire suas dúvidas sobre os conteúdos, peça ajuda com exercícios ou converse sobre programação.
           </p>
-          <button className="bg-white text-primary px-4 py-2 rounded-lg font-medium hover:bg-white/90 transition-colors">
+          <button
+            type="button"
+            onClick={onOpenChat}
+            className="bg-white text-primary px-4 py-2 rounded-lg font-medium hover:bg-white/90 transition-colors"
+          >
             Abrir Chat IA
           </button>
         </div>
