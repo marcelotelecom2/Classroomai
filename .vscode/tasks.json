@@ -1,0 +1,67 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "npm: install",
+      "type": "shell",
+      "command": ".\\.tools\\node-v22.22.3-win-x64\\npm.cmd install",
+      "options": {
+        "env": {
+          "Path": "${workspaceFolder}\\.tools\\node-v22.22.3-win-x64;${env:Path}"
+        }
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "npm: dev",
+      "type": "shell",
+      "command": ".\\.tools\\node-v22.22.3-win-x64\\npm.cmd run dev",
+      "options": {
+        "env": {
+          "Path": "${workspaceFolder}\\.tools\\node-v22.22.3-win-x64;${env:Path}"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "VITE",
+          "endsPattern": "Local:"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "npm: build",
+      "type": "shell",
+      "command": ".\\.tools\\node-v22.22.3-win-x64\\npm.cmd run build",
+      "options": {
+        "env": {
+          "Path": "${workspaceFolder}\\.tools\\node-v22.22.3-win-x64;${env:Path}"
+        }
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "npm: preview",
+      "type": "shell",
+      "command": ".\\.tools\\node-v22.22.3-win-x64\\npm.cmd run preview",
+      "options": {
+        "env": {
+          "Path": "${workspaceFolder}\\.tools\\node-v22.22.3-win-x64;${env:Path}"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}

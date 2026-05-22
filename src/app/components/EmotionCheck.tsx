@@ -1,45 +1,55 @@
-interface Emotion {
-  emoji: string;
-  label: string;
-  selected?: boolean;
-}
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router';
+import { emotionEmoji, emotionLabels } from '../data/classroomData';
+import { appDataService } from '../services/appDataService';
 
 export function EmotionCheck() {
-  const emotions: Emotion[] = [
-    { emoji: '🙂', label: 'Motivado', selected: false },
-    { emoji: '😐', label: 'Normal', selected: true },
-    { emoji: '😕', label: 'Confuso', selected: false },
-    { emoji: '😴', label: 'Cansado', selected: false },
-    { emoji: '🚀', label: 'Empolgado', selected: false },
-  ];
+  const history = appDataService.getEmotionHistory().items;
+  const latestEmotion = history[history.length - 1];
 
   return (
-    <div className="bg-card rounded-xl p-5 border border-border">
+    <div className="rounded-xl border border-border bg-card p-5">
       <div className="mb-4">
-        <h3 className="text-base font-semibold">Como você está hoje?</h3>
-        <p className="text-xs text-muted-foreground mt-1">Seu check-in ajuda a IA a ajustar seu ritmo.</p>
+        <div className="mb-2 flex items-center justify-between gap-3">
+          <h2 className="text-base font-semibold">Como voce esta hoje?</h2>
+          <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[11px] text-primary">check-in rapido</span>
+        </div>
+        <p className="text-xs text-muted-foreground">Seu check-in ajuda a IA a ajustar seu ritmo e suas sugestoes.</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
-        {emotions.map((emotion, index) => (
-          <button
-            key={index}
-            className={`flex min-h-[58px] min-w-0 items-center gap-3 rounded-lg border px-3 py-2 text-left transition-all ${
-              index === emotions.length - 1 ? 'col-span-2' : ''
-            } ${
-              emotion.selected
-                ? 'border-primary bg-primary/10 shadow-sm'
-                : 'border-border hover:bg-secondary'
-            }`}
-          >
-            <span className="text-2xl leading-none">{emotion.emoji}</span>
-            <span className={`whitespace-nowrap text-sm leading-none ${
-              emotion.selected ? 'text-primary font-medium' : 'text-muted-foreground'
-            }`}>
-              {emotion.label}
-            </span>
-          </button>
-        ))}
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        {history.slice(-4).map((entry) => {
+          const selected = entry.label === latestEmotion.label;
+          return (
+            <div
+              key={`${entry.label}-${entry.emotion}`}
+              className={`flex min-h-[60px] min-w-0 items-center gap-3 rounded-xl border px-3 py-3 ${
+                selected ? 'border-primary bg-primary/10 shadow-sm' : 'border-border bg-background/70'
+              }`}
+            >
+              <span className="text-2xl leading-none">{emotionEmoji[entry.emotion]}</span>
+              <div className="min-w-0">
+                <p className={`truncate text-sm ${selected ? 'font-medium text-primary' : 'text-foreground'}`}>
+                  {emotionLabels[entry.emotion]}
+                </p>
+                <p className="text-xs text-muted-foreground">{entry.label}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="rounded-xl bg-secondary/60 p-4">
+        <p className="text-sm font-medium">Historico recente</p>
+        <p className="mt-1 text-xs text-muted-foreground">{latestEmotion.note}</p>
+        <Link
+          to="/emotion"
+          aria-label="Ver historico de check-in"
+          className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-primary"
+        >
+          Ver historico
+          <ArrowRight size={14} />
+        </Link>
       </div>
     </div>
   );

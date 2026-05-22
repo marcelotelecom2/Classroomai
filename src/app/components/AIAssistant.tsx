@@ -1,23 +1,31 @@
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import { Link } from 'react-router';
 
 export function AIAssistant() {
   return (
-    <div className="bg-primary/5 rounded-xl p-5 border border-primary/20">
+    <div className="rounded-xl border border-primary/20 bg-primary/5 p-5">
       <div className="flex items-start gap-4">
-        <div className="p-3 bg-primary rounded-lg shrink-0">
+        <div className="shrink-0 rounded-xl bg-primary p-3">
           <Sparkles size={22} className="text-primary-foreground" />
         </div>
 
         <div className="flex-1">
-          <h3 className="text-base font-semibold mb-2">Assistente IA</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            Tire suas dúvidas sobre as aulas, exercícios ou conceitos de IA com nosso assistente inteligente.
+          <div className="mb-2 flex items-center gap-2">
+            <h3 className="text-base font-semibold">Assistente IA</h3>
+            <span className="rounded-full bg-background/80 px-2 py-0.5 text-[11px] text-primary">disponivel</span>
+          </div>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Tire duvidas sobre aulas, exercicios e conceitos sem perder o contexto da sua trilha.
           </p>
 
-          <button className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+          <Link
+            to="/chat-ia"
+            aria-label="Abrir Chat IA"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground transition-colors hover:bg-primary/90"
+          >
             Abrir Chat IA
             <ArrowRight size={16} />
-          </button>
+          </Link>
         </div>
       </div>
     </div>
@@ -26,15 +34,18 @@ export function AIAssistant() {
 
 export function AITip() {
   return (
-    <div className="bg-card rounded-xl p-5 border border-border">
+    <div className="rounded-xl border border-border bg-card p-5">
       <div className="flex items-start gap-3">
-        <div className="p-2 rounded-lg bg-primary/10">
+        <div className="rounded-lg bg-primary/10 p-2">
           <Sparkles size={18} className="text-primary" />
         </div>
         <div>
-          <h3 className="text-base font-semibold mb-1">Dica da IA</h3>
+          <div className="mb-1 flex items-center gap-2">
+            <h3 className="text-base font-semibold">Dica da IA</h3>
+            <span className="rounded-full bg-secondary px-2 py-0.5 text-[11px] text-muted-foreground">agora</span>
+          </div>
           <p className="text-sm text-muted-foreground">
-            Revise Machine Learning por 20 minutos antes da próxima aula para chegar com os conceitos frescos.
+            Revise Machine Learning por 20 minutos antes da proxima aula para chegar com os conceitos mais frescos.
           </p>
         </div>
       </div>

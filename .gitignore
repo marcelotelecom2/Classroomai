@@ -2,5 +2,9 @@ node_modules/
 dist/
 .tools/
 *.log
-package-lock.json
+.env
+.env.*
+!.env.example
+coverage/
+.vite/
 start-dev.ps1

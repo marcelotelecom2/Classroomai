@@ -1,54 +1,56 @@
-import { Clock } from 'lucide-react';
-
-interface ClassItem {
-  date: string;
-  name: string;
-  time: string;
-  status: 'próxima' | 'hoje' | 'amanhã';
-}
+import { BookOpen, Clock } from 'lucide-react';
+import { lessons } from '../data/learningData';
 
 export function UpcomingClasses() {
-  const classes: ClassItem[] = [
-    { date: '18 Mai', name: 'Fundamentos de Machine Learning', time: '14:00', status: 'amanhã' },
-    { date: '19 Mai', name: 'Redes Neurais e Deep Learning', time: '14:00', status: 'próxima' },
-    { date: '20 Mai', name: 'Processamento de Linguagem Natural', time: '14:00', status: 'próxima' },
-  ];
+  const classes = lessons.filter((lesson) => lesson.status !== 'concluida').slice(0, 3);
 
   return (
-    <div className="bg-card rounded-xl p-6 border border-border">
-      <div className="flex items-center justify-between mb-5">
+    <div className="h-full rounded-xl border border-border bg-card p-6">
+      <div className="mb-5 flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold">Próximas Aulas</h3>
-          <p className="text-sm text-muted-foreground mt-1">Agenda dos próximos encontros da turma</p>
+          <h3 className="text-lg font-semibold">Proximas aulas</h3>
+          <p className="mt-1 text-sm text-muted-foreground">Veja o que vem a seguir para se preparar com antecedencia.</p>
         </div>
-        <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary">3 aulas</span>
+        <span className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">{classes.length} mapeadas</span>
       </div>
 
-      <div className="space-y-2">
-        {classes.map((classItem, index) => (
+      <div className="space-y-3">
+        {classes.map((classItem) => (
           <div
-            key={index}
-            className="grid grid-cols-[72px_1fr_auto] items-center gap-4 p-3 rounded-lg hover:bg-secondary transition-colors cursor-pointer"
+            key={classItem.id}
+            className="grid cursor-pointer grid-cols-[72px_minmax(0,1fr)] gap-4 rounded-xl border border-border p-4 transition-colors hover:bg-secondary/40"
           >
-            <div className="rounded-lg bg-primary/10 px-3 py-2 text-center">
+            <div className="rounded-lg bg-primary/10 px-3 py-3 text-center">
               <p className="text-sm font-semibold text-primary">{classItem.date}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{classItem.time}</p>
             </div>
 
             <div className="min-w-0">
-              <p className="font-medium text-sm mb-1">{classItem.name}</p>
-              <div className="flex items-center gap-1 text-muted-foreground">
-                <Clock size={14} />
-                <span className="text-xs">{classItem.time}</span>
+              <div className="mb-2 flex flex-wrap items-center gap-2">
+                <h4 className="text-sm font-semibold">{classItem.title}</h4>
+                <span
+                  className={`rounded-full px-2.5 py-1 text-[11px] ${
+                    classItem.status === 'amanha'
+                      ? 'bg-primary/10 text-primary'
+                      : classItem.status === 'ao vivo'
+                        ? 'bg-green-50 text-green-700'
+                        : 'bg-secondary text-muted-foreground'
+                  }`}
+                >
+                  {classItem.status}
+                </span>
+              </div>
+              <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-1">
+                  <Clock size={14} />
+                  {classItem.duration}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <BookOpen size={14} />
+                  material {classItem.materialStatus}
+                </span>
               </div>
             </div>
-
-            <span className={`text-xs px-3 py-1 rounded-full ${
-              classItem.status === 'amanhã'
-                ? 'bg-primary/10 text-primary'
-                : 'bg-secondary text-muted-foreground'
-            }`}>
-              {classItem.status}
-            </span>
           </div>
         ))}
       </div>

@@ -1,0 +1,19 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.vite": true
+  },
+  "terminal.integrated.env.windows": {
+    "Path": "${workspaceFolder}\\.tools\\node-v22.22.3-win-x64;${env:Path}"
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative"
+}

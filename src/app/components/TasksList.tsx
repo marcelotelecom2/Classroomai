@@ -1,20 +1,11 @@
-import { CheckCircle2, Circle, AlertCircle } from 'lucide-react';
-
-interface Task {
-  name: string;
-  status: 'atrasada' | 'em andamento' | 'entregue';
-  dueDate: string;
-}
+import { AlertCircle, CheckCircle2, Circle } from 'lucide-react';
+import { appDataService } from '../services/appDataService';
 
 export function TasksList() {
-  const tasks: Task[] = [
-    { name: 'Implementar modelo de classificação', status: 'em andamento', dueDate: 'Hoje' },
-    { name: 'Análise de dataset de imagens', status: 'entregue', dueDate: '16 Mai' },
-    { name: 'Projeto final - Chatbot com IA', status: 'em andamento', dueDate: '25 Mai' },
-    { name: 'Exercícios de regressão linear', status: 'atrasada', dueDate: '15 Mai' },
-  ];
+  const tasks = appDataService.getTasks().slice(0, 4);
+  const taskCounts = appDataService.getTaskCounts(tasks);
 
-  const getStatusIcon = (status: Task['status']) => {
+  const getStatusIcon = (status: (typeof tasks)[number]['status']) => {
     switch (status) {
       case 'entregue':
         return <CheckCircle2 size={18} className="text-green-500" />;
@@ -25,7 +16,7 @@ export function TasksList() {
     }
   };
 
-  const getStatusColor = (status: Task['status']) => {
+  const getStatusColor = (status: (typeof tasks)[number]['status']) => {
     switch (status) {
       case 'entregue':
         return 'bg-green-50 text-green-700';
@@ -37,31 +28,32 @@ export function TasksList() {
   };
 
   return (
-    <div className="bg-card rounded-xl p-6 border border-border">
-      <div className="flex items-center justify-between mb-5">
+    <div className="h-full rounded-xl border border-border bg-card p-6">
+      <div className="mb-5 flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold">Tarefas Pendentes</h3>
-          <p className="text-sm text-muted-foreground mt-1">Priorize o que pede atenção hoje</p>
+          <h3 className="text-lg font-semibold">Tarefas em foco</h3>
+          <p className="mt-1 text-sm text-muted-foreground">Resolva o que pede atencao primeiro e mantenha o ritmo da semana.</p>
         </div>
-        <span className="text-xs px-3 py-1 rounded-full bg-red-50 text-destructive">1 atrasada</span>
+        <span className="rounded-full bg-red-50 px-3 py-1 text-xs text-destructive">{taskCounts.overdue} atrasada</span>
       </div>
 
-      <div className="space-y-2">
-        {tasks.map((task, index) => (
+      <div className="space-y-3">
+        {tasks.map((task) => (
           <div
-            key={index}
-            className="grid grid-cols-[auto_1fr_auto] items-center gap-3 p-3 rounded-lg hover:bg-secondary transition-colors cursor-pointer"
+            key={task.id}
+            className="grid cursor-pointer grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-border p-4 transition-colors hover:bg-secondary/40"
           >
-            {getStatusIcon(task.status)}
+            <div className="pt-0.5">{getStatusIcon(task.status)}</div>
 
             <div className="min-w-0">
-              <p className="text-sm font-medium mb-0.5">{task.name}</p>
-              <p className="text-xs text-muted-foreground">{task.dueDate}</p>
+              <p className="mb-1 text-sm font-semibold">{task.title}</p>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                <span>{task.course}</span>
+                <span>Prazo: {task.dueDate}</span>
+              </div>
             </div>
 
-            <span className={`text-xs px-2.5 py-1 rounded-full ${getStatusColor(task.status)}`}>
-              {task.status}
-            </span>
+            <span className={`rounded-full px-2.5 py-1 text-xs ${getStatusColor(task.status)}`}>{task.status}</span>
           </div>
         ))}
       </div>
